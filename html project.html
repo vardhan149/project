@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ScoutPro - Athlete Scouting Platform</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    nav {
+      height: 70px;
+      background: #101828;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #38bdf8;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    nav ul li a:hover {
+      color: #38bdf8;
+    }
+
+    .nav-button {
+      background: #2563eb;
+      padding: 10px 18px;
+      border-radius: 7px;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      background: linear-gradient(135deg, #101828, #1d4ed8);
+      color: white;
+      padding: 80px 6%;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 52px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: #38bdf8;
+    }
+
+    .hero p {
+      color: #dbeafe;
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      padding: 13px 22px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .primary-btn {
+      background: #38bdf8;
+      color: #082f49;
+    }
+
+    .secondary-btn {
+      background: transparent;
+      border: 1px solid #93c5fd;
+      color: white;
+    }
+
+    /* ================= DASHBOARD PREVIEW ================= */
+
+    .dashboard-preview {
+      background: white;
+      color: #172033;
+      padding: 22px;
+      border-radius: 15px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .preview-header h3 {
+      font-size: 18px;
+    }
+
+    .rating {
+      background: #dcfce7;
+      color: #15803d;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .metric {
+      margin: 15px 0;
+    }
+
+    .metric-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .bar {
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: #2563eb;
+      border-radius: 20px;
+    }
+
+    /* ================= SECTION ================= */
+
+    .section {
+      padding: 70px 6%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+      font-size: 35px;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #64748b;
+    }
+
+    /* ================= SEARCH ================= */
+
+    .search-box {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+      margin-bottom: 35px;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr auto;
+      gap: 12px;
+    }
+
+    .filters input,
+    .filters select {
+      padding: 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 7px;
+      outline: none;
+    }
+
+    .filters input:focus,
+    .filters select:focus {
+      border-color: #2563eb;
+    }
+
+    .search-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      padding: 0 20px;
+      cursor: pointer;
+    }
+
+    /* ================= ATHLETE CARDS ================= */
+
+    .athlete-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .athlete-card {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+      transition: 0.25s;
+    }
+
+    .athlete-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+
+    .athlete-top {
+      padding: 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: #eff6ff;
+    }
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .athlete-info h3 {
+      margin-bottom: 5px;
+    }
+
+    .athlete-info p {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .athlete-body {
+      padding: 22px;
+    }
+
+    .athlete-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .detail {
+      background: #f8fafc;
+      padding: 10px;
+      border-radius: 7px;
+    }
+
+    .detail small {
+      display: block;
+      color: #64748b;
+      margin-bottom: 3px;
+    }
+
+    .detail strong {
+      font-size: 14px;
+    }
+
+    .card-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .card-buttons button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .view-btn {
+      background: #2563eb;
+      color: white;
+    }
+
+    .shortlist-btn {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    /* ================= FEATURES ================= */
+
+    .features {
+      background: #101828;
+      color: white;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .feature {
+      background: #1e293b;
+      padding: 25px;
+      border-radius: 12px;
+    }
+
+    .feature-icon {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    .feature h3 {
+      margin-bottom: 10px;
+    }
+
+    .feature p {
+      color: #cbd5e1;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* ================= COMPARISON ================= */
+
+    .comparison {
+      background: white;
+      border-radius: 14px;
+      overflow-x: auto;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 17px;
+      text-align: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #eff6ff;
+      color: #1e3a8a;
+    }
+
+    td:first-child {
+      text-align: left;
+      font-weight: bold;
+    }
+
+    .score {
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 30px;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    /* ================= MODAL ================= */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: white;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 15px;
+      padding: 30px;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    .modal-title {
+      margin-bottom: 20px;
+    }
+
+    .report {
+      background: #f8fafc;
+      padding: 18px;
+      border-radius: 10px;
+      line-height: 1.7;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 1000px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .athlete-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .filters {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+      nav ul {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 38px;
+      }
+
+      .athlete-grid,
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filters {
+        grid-template-columns: 1fr;
+      }
+
+      .search-btn {
+        padding: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= NAVIGATION ================= -->
+
+  <nav>
+    <div class="logo">
+      Scout<span>Pro</span>
+    </div>
+
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#athletes">Athletes</a></li>
+      <li><a href="#comparison">Compare</a></li>
+      <li><a href="#features">Features</a></li>
+    </ul>
+
+    <button class="nav-button" onclick="scrollToAthletes()">
+      Start Scouting
+    </button>
+  </nav>
+
+
+  <!-- ================= HERO ================= -->
+
+  <section class="hero" id="home">
+
+    <div>
+      <h1>
+        Find the next
+        <span>great athlete.</span>
+      </h1>
+
+      <p>
+        A structured athlete scouting platform for academies,
+        coaches and scouts. Discover talent, evaluate performance,
+        create shortlists and compare athletes in one place.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="primary-btn" onclick="scrollToAthletes()">
+          Explore Athletes
+        </button>
+
+        <button class="secondary-btn" onclick="scrollToComparison()">
+          Compare Players
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Dashboard Preview -->
+
+    <div class="dashboard-preview">
+
+      <div class="preview-header">
+        <h3>Performance Overview</h3>
+        <span class="rating">92 / 100</span>
+      </div>
+
+      <div class="metric">
+        <div class="metric-top">
+          <span>Speed</span>
+          <strong>94</strong>
+        </div>
+
+        <div class="bar">
+          <div class="bar-fill" style="width:94%"></div>
+        </div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-top">
+          <span>Technical Skill</span>
+          <strong>91</strong>
+        </div>
+
+        <div class="bar">
+          <div class="bar-fill" style="width:91%"></div>
+        </div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-top">
+          <span>Game Intelligence</span>
+          <strong>88</strong>
+        </div>
+
+        <div class="bar">
+          <div class="bar-fill" style="width:88%"></div>
+        </div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-top">
+          <span>Potential</span>
+          <strong>96</strong>
+        </div>
+
+        <div class="bar">
+          <div class="bar-fill" style="width:96%"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= ATHLETES ================= -->
+
+  <section class="section" id="athletes">
+
+    <div class="section-title">
+      <h2>Athlete Database</h2>
+      <p>Search and evaluate athletes using structured performance data.</p>
+    </div>
+
+
+    <!-- Search -->
+
+    <div class="search-box">
+
+      <div class="filters">
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search athlete..."
+        />
+
+        <select id="sportFilter">
+          <option value="">All Sports</option>
+          <option value="Football">Football</option>
+          <option value="Basketball">Basketball</option>
+          <option value="Cricket">Cricket</option>
+          <option value="Athletics">Athletics</option>
+        </select>
+
+        <select id="positionFilter">
+          <option value="">All Positions</option>
+          <option value="Forward">Forward</option>
+          <option value="Midfielder">Midfielder</option>
+          <option value="Defender">Defender</option>
+          <option value="Guard">Guard</option>
+          <option value="Batter">Batter</option>
+          <option value="Sprinter">Sprinter</option>
+        </select>
+
+        <select id="ratingFilter">
+          <option value="">Any Rating</option>
+          <option value="90">90+</option>
+          <option value="80">80+</option>
+          <option value="70">70+</option>
+        </select>
+
+        <button class="search-btn" onclick="filterAthletes()">
+          Search
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- Athlete Cards -->
+
+    <div class="athlete-grid" id="athleteGrid"></div>
+
+  </section>
+
+
+  <!-- ================= FEATURES ================= -->
+
+  <section class="section features" id="features">
+
+    <div class="section-title">
+      <h2>Scouting Tools</h2>
+      <p>
+        Everything needed to evaluate and organize athlete talent.
+      </p>
+    </div>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <div class="feature-icon">👤</div>
+        <h3>Athlete Profiles</h3>
+        <p>
+          Store athlete information including sport, position,
+          statistics, skills and career history.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <h3>Performance Metrics</h3>
+        <p>
+          Analyze speed, technical ability, consistency,
+          fitness and other sport-specific measurements.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">📝</div>
+        <h3>Scouting Reports</h3>
+        <p>
+          Create structured scouting reports containing
+          strengths, development areas and recommendations.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">⭐</div>
+        <h3>Shortlists</h3>
+        <p>
+          Save promising athletes and create a shortlist
+          for further evaluation.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= COMPARISON ================= -->
+
+  <section class="section" id="comparison">
+
+    <div class="section-title">
+      <h2>Player Comparison</h2>
+      <p>Compare athlete performance side by side.</p>
+    </div>
+
+    <div class="comparison">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Arjun Sharma</th>
+            <th>Rahul Singh</th>
+            <th>David Johnson</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>Sport</td>
+            <td>Football</td>
+            <td>Football</td>
+            <td>Football</td>
+          </tr>
+
+          <tr>
+            <td>Position</td>
+            <td>Forward</td>
+            <td>Midfielder</td>
+            <td>Forward</td>
+          </tr>
+
+          <tr>
+            <td>Speed</td>
+            <td class="score">94</td>
+            <td class="score">87</td>
+            <td class="score">91</td>
+          </tr>
+
+          <tr>
+            <td>Technical Skill</td>
+            <td class="score">91</td>
+            <td class="score">94</td>
+            <td class="score">89</td>
+          </tr>
+
+          <tr>
+            <td>Game Intelligence</td>
+            <td class="score">88</td>
+            <td class="score">92</td>
+            <td class="score">90</td>
+          </tr>
+
+          <tr>
+            <td>Potential</td>
+            <td class="score">96</td>
+            <td class="score">90</td>
+            <td class="score">93</td>
+          </tr>
+
+          <tr>
+            <td>Overall Rating</td>
+            <td class="score">92</td>
+            <td class="score">91</td>
+            <td class="score">90</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+    <p>
+      © 2026 <strong>ScoutPro</strong> — Athlete Scouting Platform
+    </p>
+  </footer>
+
+
+  <!-- ================= MODAL ================= -->
+
+  <div class="modal" id="profileModal">
+
+    <div class="modal-content">
+
+      <span class="close" onclick="closeModal()">×</span>
+
+      <h2 class="modal-title" id="modalName">
+        Athlete Profile
+      </h2>
+
+      <div class="report" id="modalReport"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    const athletes = [
+
+      {
+        name: "Arjun Sharma",
+        initials: "AS",
+        sport: "Football",
+        position: "Forward",
+        age: 19,
+        location: "Punjab, India",
+        rating: 92,
+        potential: 96,
+        speed: 94,
+        skill: 91,
+        intelligence: 88
+      },
+
+      {
+        name: "Rahul Singh",
+        initials: "RS",
+        sport: "Football",
+        position: "Midfielder",
+        age: 20,
+        location: "Delhi, India",
+        rating: 91,
+        potential: 90,
+        speed: 87,
+        skill: 94,
+        intelligence: 92
+      },
+
+      {
+        name: "David Johnson",
+        initials: "DJ",
+        sport: "Football",
+        position: "Forward",
+        age: 21,
+        location: "London, UK",
+        rating: 90,
+        potential: 93,
+        speed: 91,
+        skill: 89,
+        intelligence: 90
+      },
+
+      {
+        name: "Aman Verma",
+        initials: "AV",
+        sport: "Cricket",
+        position: "Batter",
+        age: 19,
+        location: "Chandigarh, India",
+        rating: 88,
+        potential: 94,
+        speed: 82,
+        skill: 93,
+        intelligence: 89
+      },
+
+      {
+        name: "Marcus Brown",
+        initials: "MB",
+        sport: "Basketball",
+        position: "Guard",
+        age: 20,
+        location: "New York, USA",
+        rating: 89,
+        potential: 92,
+        speed: 95,
+        skill: 88,
+        intelligence: 91
+      },
+
+      {
+        name: "Simran Kaur",
+        initials: "SK",
+        sport: "Athletics",
+        position: "Sprinter",
+        age: 18,
+        location: "Punjab, India",
+        rating: 87,
+        potential: 95,
+        speed: 97,
+        skill: 86,
+        intelligence: 85
+      }
+
+    ];
+
+
+    function displayAthletes(list) {
+
+      const grid = document.getElementById("athleteGrid");
+
+      grid.innerHTML = "";
+
+      if (list.length === 0) {
+
+        grid.innerHTML = `
+          <p style="grid-column:1/-1;text-align:center;padding:40px;">
+            No athletes found.
+          </p>
+        `;
+
+        return;
+      }
+
+
+      list.forEach((athlete, index) => {
+
+        const card = document.createElement("div");
+
+        card.className = "athlete-card";
+
+        card.innerHTML = `
+
+          <div class="athlete-top">
+
+            <div class="avatar">
+              ${athlete.initials}
+            </div>
+
+            <div class="athlete-info">
+
+              <h3>${athlete.name}</h3>
+
+              <p>
+                ${athlete.sport} · ${athlete.position}
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="athlete-body">
+
+            <div class="athlete-details">
+
+              <div class="detail">
+                <small>Age</small>
+                <strong>${athlete.age}</strong>
+              </div>
+
+              <div class="detail">
+                <small>Location</small>
+                <strong>${athlete.location}</strong>
+              </div>
+
+              <div class="detail">
+                <small>Rating</small>
+                <strong>${athlete.rating}/100</strong>
+              </div>
+
+              <div class="detail">
+                <small>Potential</small>
+                <strong>${athlete.potential}/100</strong>
+              </div>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+              <button
+                class="view-btn"
+                onclick="viewProfile(${index})">
+                View Profile
+              </button>
+
+              <button
+                class="shortlist-btn"
+                onclick="addShortlist('${athlete.name}')">
+                + Shortlist
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+        grid.appendChild(card);
+
+      });
+
+    }
+
+
+    function filterAthletes() {
+
+      const search =
+        document
+          .getElementById("searchInput")
+          .value
+          .toLowerCase();
+
+      const sport =
+        document
+          .getElementById("sportFilter")
+          .value;
+
+      const position =
+        document
+          .getElementById("positionFilter")
+          .value;
+
+      const rating =
+        document
+          .getElementById("ratingFilter")
+          .value;
+
+
+      const filtered = athletes.filter(athlete => {
+
+        const matchesSearch =
+          athlete.name
+            .toLowerCase()
+            .includes(search);
+
+        const matchesSport =
+          !sport ||
+          athlete.sport === sport;
+
+        const matchesPosition =
+          !position ||
+          athlete.position === position;
+
+        const matchesRating =
+          !rating ||
+          athlete.rating >= Number(rating);
+
+        return (
+          matchesSearch &&
+          matchesSport &&
+          matchesPosition &&
+          matchesRating
+        );
+
+      });
+
+
+      displayAthletes(filtered);
+
+    }
+
+
+    function viewProfile(index) {
+
+      const athlete = athletes[index];
+
+      document.getElementById("modalName").innerText =
+        athlete.name;
+
+      document.getElementById("modalReport").innerHTML = `
+
+        <p>
+          <strong>Sport:</strong>
+          ${athlete.sport}
+        </p>
+
+        <p>
+          <strong>Position:</strong>
+          ${athlete.position}
+        </p>
+
+        <p>
+          <strong>Age:</strong>
+          ${athlete.age}
+        </p>
+
+        <p>
+          <strong>Location:</strong>
+          ${athlete.location}
+        </p>
+
+        <hr style="margin:15px 0;">
+
+        <p>
+          <strong>Overall Rating:</strong>
+          ${athlete.rating}/100
+        </p>
+
+        <p>
+          <strong>Speed:</strong>
+          ${athlete.speed}/100
+        </p>
+
+        <p>
+          <strong>Technical Skill:</strong>
+          ${athlete.skill}/100
+        </p>
+
+        <p>
+          <strong>Game Intelligence:</strong>
+          ${athlete.intelligence}/100
+        </p>
+
+        <p>
+          <strong>Potential:</strong>
+          ${athlete.potential}/100
+        </p>
+
+        <hr style="margin:15px 0;">
+
+        <p>
+          <strong>Scouting Report:</strong>
+          ${athlete.name} demonstrates strong performance
+          in their current role. The profile should be
+          reviewed alongside recent performance data,
+          coach observations and competition level before
+          making a scouting decision.
+        </p>
+
+      `;
+
+      document.getElementById("profileModal").style.display =
+        "flex";
+
+    }
+
+
+    function closeModal() {
+
+      document.getElementById("profileModal").style.display =
+        "none";
+
+    }
+
+
+    function addShortlist(name) {
+
+      alert(
+        name + " has been added to your shortlist!"
+      );
+
+    }
+
+
+    function scrollToAthletes() {
+
+      document
+        .getElementById("athletes")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
+    }
+
+
+    function scrollToComparison() {
+
+      document
+        .getElementById("comparison")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
+    }
+
+
+    // Load athletes when page opens
+
+    displayAthletes(athletes);
+
+  </script>
+
+</body>
+</html>
